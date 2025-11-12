@@ -57,13 +57,50 @@ You can simulate your script on thousands of bustabit games, in a few seconds.
   - `sim.startingBalance`
 
 
+## New Provably Fair Seeding Algorithm
+
+This project now includes an implementation of the new bustabit seeding algorithm with:
+
+- **Hash Chain Verification** - Verify hashes in the 100M game chain
+- **BLS Signature Validation** - Validate VX signatures for fairness
+- **Game Result Calculation** - Calculate crash points using HMAC-SHA256
+
+### Quick Start with Seeding Algorithm
+
+```bash
+# Install dependencies
+npm install
+
+# Build the TypeScript code
+npm run build
+
+# Run the example
+npm run test
+```
+
+For detailed documentation, see [SEEDING.md](SEEDING.md).
+
+### Using the Seeding Functions
+
+```typescript
+import { verifyInChain, validateSignature, gameResult } from "./seeding.js";
+import { hexToBytes } from "@noble/hashes/utils";
+
+// Verify a hash is in the chain
+const hash = hexToBytes("70eed5c29bde5132f4e41ec8b117a31533e5b055c6c21174d932b377a1855a04");
+const gameId = verifyInChain(hash);
+
+// Calculate game result
+const crashPoint = gameResult(vxSignature, gameHash);
+```
+
 ## Frequently Asked Questions
 
 ##### How are the game results generated?
-Bustabit is provably fair. If you have the *hash* of one game, you can calculate the result of that game and all games before it. This concept is explained on bustabit.com
+Bustabit is provably fair. The new seeding algorithm uses a chain of 100,000,000 SHA256 hashes combined with BLS signatures to generate verifiable game results. See [SEEDING.md](SEEDING.md) for details.
 
 ##### So, the game results are the same as on bustabit?
-Yes, as long as you copy a real game *hash* from a bustabit game.
+Yes, as long as you use the correct hash from the chain and valid VX signatures.
 
 ##### Are the game results in the same order as on bustabit?
 Yes. The game results have to be calculated backwards from the input *hash*. But the simulation runs in regular order.

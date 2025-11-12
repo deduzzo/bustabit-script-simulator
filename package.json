@@ -1,0 +1,33 @@
+{
+  "name": "bustabit-script-simulator",
+  "version": "2.0.0",
+  "description": "Bustabit Script Simulator with new provably fair seeding algorithm",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "node dist/example.js",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "bustabit",
+    "simulator",
+    "provably-fair",
+    "seeding",
+    "bls",
+    "sha256"
+  ],
+  "author": "Roberto De Domenico",
+  "license": "MIT",
+  "dependencies": {
+    "@noble/curves": "^1.6.0",
+    "@noble/hashes": "^1.5.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
