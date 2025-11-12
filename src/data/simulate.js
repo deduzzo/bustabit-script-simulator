@@ -1,5 +1,9 @@
 import EventEmitter from 'events'
 import CryptoJS from "crypto-js"
+import { generateGameResults } from './newProvablyFair'
+
+// Flag to toggle between old and new algorithm
+const USE_NEW_ALGORITHM = true;
 
 function hashToBust(seed) {
   const nBits = 52;
@@ -17,6 +21,16 @@ function hashToBusts(seed, amount) {
   if (isNaN(amount) || amount <= 0) {
     throw new TypeError('amount must be a number larger than zero.')
   }
+
+  // Use new algorithm if enabled
+  if (USE_NEW_ALGORITHM) {
+    // Generate results using new provably fair system with the provided seed/hash
+    // The seed is the starting game hash from bustabit
+    const results = generateGameResults(seed, amount);
+    return results;
+  }
+
+  // Legacy algorithm
   let prevHash = seed
   const result = []
   result.unshift({ hash: prevHash, bust: hashToBust(String(prevHash)) })
@@ -385,3 +399,4 @@ function simulate({ text, config, startingBalance, gameHash, gameAmount, enableC
 
 
 export default simulate
+export { hashToBust, hashToBusts }
